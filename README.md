@@ -9,7 +9,7 @@ Instead, its aim is to provide tools that do a single job well.
 ctt works with `.csv` files. It mandates a canonical header structure 
 
 ```csv
-type,location,asset,price_in_EUR,fee_in_EUR,amount,exchanged_amount,exchanged_asset,time
+type,location,asset,amount,exchanged_amount,exchanged_asset,datetime
 ```
 
 - `type` is either `{"sell", "buy"}`.
@@ -18,4 +18,4 @@ type,location,asset,price_in_EUR,fee_in_EUR,amount,exchanged_amount,exchanged_as
 - `amount` is the amount of `asset`.
 - `exchanged_amount` is the amount of `exchanged_asset`.
 - `exchanged_asset` is the counter asset ticket of `asset`, e.g. Euro is "EUR".
-- `time` is the ISO 8601 time the action executed.
+- `datetime` is the ISO 8601 time the action executed.
