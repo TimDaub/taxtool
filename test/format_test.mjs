@@ -1,16 +1,15 @@
 // @format
 import test from "ava";
-import { $ as EUR, createCurrency, ethereum as ETH } from "moneysafe";
 import { parseISO, isValid } from "date-fns";
 
-import { parse, toLine } from "../src/format.mjs";
+import {
+  parse,
+  toLine,
+  testNum,
+  testDateTime,
+  currencies
+} from "../src/format.mjs";
 import { toList } from "../src/file.mjs";
-
-const currencies = {
-  BTC: createCurrency({ decimals: 8 }),
-  ETH,
-  EUR
-};
 
 test("if parsing objects according to options works", async t => {
   let l = await toList("./test/fixtures/testfile.csv");
@@ -37,9 +36,9 @@ test("if parsing objects according to options works", async t => {
   t.is(head.type, "buy");
   t.is(head.location, "coinbase");
   t.is(head.asset, "ETH");
-  t.is(head.amount, ETH("1.5").toString());
+  t.is(head.amount, currencies.ETH("1.5").toString());
   t.is(head.exchanged_asset, "EUR");
-  t.is(head.exchanged_amount, EUR("1.5").toString());
+  t.is(head.exchanged_amount, currencies.EUR("1.5").toString());
 });
 
 test("if file with different float notation can be parsed too", async t => {
@@ -67,9 +66,9 @@ test("if file with different float notation can be parsed too", async t => {
   t.is(head.type, "buy");
   t.is(head.location, "coinbase");
   t.is(head.asset, "ETH");
-  t.is(head.amount, ETH("1.5").toString());
+  t.is(head.amount, currencies.ETH("1.5").toString());
   t.is(head.exchanged_asset, "EUR");
-  t.is(head.exchanged_amount, EUR("1.5").toString());
+  t.is(head.exchanged_amount, currencies.EUR("1.5").toString());
 });
 
 test("if turning object into a csv line works", async t => {
@@ -90,4 +89,26 @@ test("if turning object into a csv line works", async t => {
       obj.exchanged_amount
     },${obj.exchanged_asset},${obj.datetime}`
   );
+});
+
+test("if numbers are correctly tested during parsing", t => {
+  t.is(testNum("1.5", "EUR"), "1.50");
+  t.is(testNum("0.12", "BTC"), "0.12000000");
+  t.is(testNum("0.12", "ETH"), "0.120000000000000000");
+  t.throws(() => testNum("0.12", "BSCOIN"));
+});
+
+// TODO: These tests are likely to fail for any location but Germany in winter
+// as they implicitly assume time zones.
+test("if dates can be parsed with ISO or custom", t => {
+  t.is(
+    testDateTime("parseISO")("2021-03-17T16:53:12.587Z"),
+    "2021-03-17T16:53:12.587Z"
+  );
+  t.is(
+    testDateTime("dd/MM/yyyy HH:mm:ss")("28/05/2017 13:18:12"),
+    "2017-05-28T11:18:12.000Z"
+  );
+
+  t.throws(() => testDateTime("mm", "2021-03-17T16:53:12.587Z")("28/05/2017 13:18:12"));
 });

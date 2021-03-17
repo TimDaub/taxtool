@@ -65,6 +65,33 @@ $ cat parsed.csv
 > ...
 ```
 
+Alternatively, you can clone this repo and use `npx taxtool --help` to run
+commands.
+
+### Using `--formatdatetime, -f`
+
+Assuming you have a date of the format `28/05/2017 13:18:12`, then you can use
+the format string `dd/MM/yyyy HH:mm:ss` according to [date-fns's
+`parse`](https://date-fns.org/v2.8.1/docs/parse).
+
+trades.csv
+```csv
+> type,location,asset,amount,exchanged_amount,exchanged_asset,datetime
+> buy,coinbase,ETH,1.5,1.5,EUR,17/03/2021 11:32:48
+```
+
+```bash
+$ taxtool trades.csv --parse -f "dd/MM/yyyy HH:mm:ss"
+> type,location,asset,amount,exchanged_amount,exchanged_asset,datetime
+> buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
+> ...
+```
+
+`**Please note** that taxtool assumes all datetimes in your computer's time
+zone. It will, however, output [ISO
+8601](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+in the "UTC" timezone indicated by the "Z" suffix.
+
 ## License
 
 See [LICENSE](./LICENSE)
