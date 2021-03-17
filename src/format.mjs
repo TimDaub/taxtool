@@ -18,3 +18,26 @@ export function parse(obj, options) {
 
   return clone;
 }
+
+export const header = [
+  "type",
+  "location",
+  "asset",
+  "amount",
+  "exchanged_amount",
+  "exchanged_asset",
+  "datetime"
+];
+
+export function toLine(obj) {
+  let line = "";
+  for (let prop of header) {
+    line += obj[prop] + ",";
+  }
+
+  // NOTE: We remove the last letter as we've deliberately added an extra `,`
+  // at the end.
+  line = line.slice(0, -1);
+
+  return line;
+}

@@ -16,5 +16,5 @@ test("if converting lines to a JS list works", async t => {
   t.is(head.exchanged_amount, "1,5");
   t.is(head.exchanged_asset, "EUR");
   t.is(head.exchanged_asset, "EUR");
-  t.true(isValid(parseISO(head.time)));
+  t.true(isValid(parseISO(head.datetime)));
 });

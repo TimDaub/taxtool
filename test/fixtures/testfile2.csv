@@ -1,0 +1,3 @@
+type,location,asset,amount,exchanged_amount,exchanged_asset,datetime
+buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
+buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
