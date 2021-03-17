@@ -1,0 +1,28 @@
+{
+  "scripts": {
+    "test": "ava"
+  },
+  "devDependencies": {
+    "ava": "3.15.0"
+  },
+  "name": "cryptotaxtools",
+  "description": "ctt is a tool that can help you file your crypto currency taxes.",
+  "version": "0.0.1",
+  "main": "./src/index.mjs",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "crypto",
+    "tools",
+    "tax",
+    "calculation",
+    "crypto",
+    "currencies"
+  ],
+  "author": "Tim Daubenschütz <tim@daubenschuetz.de> (https://timdaub.github.io/)",
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "ya-csv": "1.0.0"
+  }
+}
