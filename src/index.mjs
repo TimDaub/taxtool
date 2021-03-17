@@ -15,6 +15,7 @@ Usage:
 
 Options:
   --parse, -p
+  --formatdatetime, -f
 `,
   {
     flags: {

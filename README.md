@@ -57,19 +57,36 @@ buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
 - taxtool uses [moneysafe](https://www.npmjs.com/package/moneysafe) to ensure
   precision for financial calculations.
 
-## Usage
+## Installation
 
 ```bash
 $ npm i -g taxtool
+```
+
+Alternatively, you can clone this repo and use `npx taxtool --help` to run
+commands.
+
+## Usage
+
+### `--help`
+
+```bash
+$ taxtool --help
+```
+
+### Using `--parse, -p`
+
+The purpose of the `--parse` option is help you format your .csv file into the
+canonical `taxtool` format layed out a few sections above. Successfully parsing
+your .csv file will allow you to use further functionality of `taxtool`.
+
+```bash
 $ taxtool trades.csv --parse > parsed.csv
 $ cat parsed.csv
 > type,location,asset,amount,exchanged_amount,exchanged_asset,datetime
 > buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
 > ...
 ```
-
-Alternatively, you can clone this repo and use `npx taxtool --help` to run
-commands.
 
 ### Using `--formatdatetime, -f`
 
