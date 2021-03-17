@@ -1,5 +1,8 @@
 # taxtool
 
+[![npm version](https://badge.fury.io/js/taxtool.svg)](https://badge.fury.io/js/taxtool)
+[![Node.js CI](https://github.com/TimDaub/taxtool/actions/workflows/node.js.yml/badge.svg)](https://github.com/TimDaub/taxtool/actions/workflows/node.js.yml)
+
 taxtool is a tool that can help you file your crypto currency taxes. It's NOT
 an all-encompassing tool that will accompany throught your annual tax life
 cycle. Instead, its aim is to provide tools that do a single job well to help
