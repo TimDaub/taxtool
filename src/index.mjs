@@ -34,11 +34,17 @@ Options:
 );
 
 export async function route(input, flags) {
+  let l;
   if (flags.parse) {
-    await parseInput(input[0], flags.formatdatetime);
-  } else {
-    throw new Error("Not implemented");
+    l = await parseInput(input[0], flags.formatdatetime);
   }
+  output(l);
+}
+
+function output(l) {
+  console.info(header.join(","));
+  l.shift();
+  l.forEach(elem => console.info(toLine(elem)));
 }
 
 export async function parseInput(input, fDateTime) {
@@ -47,9 +53,8 @@ export async function parseInput(input, fDateTime) {
   const testString = elem =>
     typeof elem === "string" && elem.length > 0 ? elem : null;
 
-  console.info(header.join(","));
-  l = l.map(elem => {
-    elem = parse(elem, {
+  l = l.map(elem =>
+    parse(elem, {
       type: t => (t === "buy" || t === "sell" ? t : null),
       location: testString,
       asset: testString,
@@ -57,12 +62,8 @@ export async function parseInput(input, fDateTime) {
       exchanged_asset: testString,
       exchanged_amount: testNum,
       datetime: testDateTime(fDateTime)
-    });
-
-    console.info(toLine(elem));
-
-    return elem;
-  });
+    })
+  );
 
   return l;
 }
