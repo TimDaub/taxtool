@@ -87,7 +87,7 @@ $ taxtool trades.csv --parse -f "dd/MM/yyyy HH:mm:ss"
 > ...
 ```
 
-`**Please note** that taxtool assumes all datetimes in your computer's time
+**Please note** that taxtool assumes all datetimes in your computer's time
 zone. It will, however, output [ISO
 8601](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
 in the "UTC" timezone indicated by the "Z" suffix.
