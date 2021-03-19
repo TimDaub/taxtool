@@ -56,7 +56,8 @@ structure useful.
 - `amount` is the amount of `asset`.
 - `exchanged_amount` is the amount of `exchanged_asset`.
 - `exchanged_asset` is the counter asset ticket of `asset`, e.g. Euro is "EUR".
-- `datetime` is the ISO 8601 time the action executed.
+- `datetime` is the ISO 8601 time the action executed. Note that ISO 8601 assumes
+  UTC as its default time zone.
 
 ### Notes
 
