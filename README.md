@@ -31,7 +31,7 @@ this small set of tools. Some problems I encountered in other tools:
 That's why I ended building `taxtool` myself. My goal is to build a tool that
 supports an offline-first workflow. It doesn't impose opinion or
 juristicional-specific logic on the data. taxtools purpose is to deliver clean
-and honest data to financial authorities such that when they decided how they
+and factual data to financial authorities such that when they decided how they
 want to tax crypto, they can do so with my data. I want to build taxtool such
 that it remains a small and well-tested code base.
 
