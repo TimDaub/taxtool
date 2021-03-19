@@ -20,17 +20,20 @@ and your tax accountant will thank you.
 
 There's many "better" tools on the internet. They allow you to create
 connections to exchanges and they do "all the hard work" to make filling taxes
-for crypto less complex. However, they all had problem that lead me to create
+for crypto less complex. However, they all had problems that lead me to create
 this small set of tools. Some problems I encountered in other tools:
 
 - They did not respect my privacy by e.g. uploading my tax data into a cloud.
 - They did impose an opinionated approach towards calculating my tax return.
 - They were so huge/complex/properietary that it was impossible for me or my
-  tax accountant to verify that their calculations are correct.
+  tax accountant to verify that their calculations were correct.
 
 That's why I ended building `taxtool` myself. My goal is to build a tool that
 supports an offline-first workflow. It doesn't impose opinion or
-juristicional-specific logic on the data. Finally, it's small and well tested.
+juristicional-specific logic on the data. taxtools purpose is to deliver clean
+and honest data to financial authorities such that when they decided how they
+want to tax crypto, they can do so with my data. I want to build taxtool such
+that it remains a small and well-tested code base.
 
 ## Data Format
 
@@ -41,6 +44,9 @@ type,location,asset,amount,exchanged_amount,exchanged_asset,datetime
 buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
 buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
 ```
+
+taxtool uses this data structure as my accountant and I found this
+structure useful.
 
 ### Properties
 
