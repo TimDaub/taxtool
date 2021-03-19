@@ -127,3 +127,7 @@ in the "UTC" timezone indicated by the "Z" suffix.
 ## License
 
 See [LICENSE](./LICENSE)
+
+## Further reading
+
+- https://plaintextaccounting.org/
