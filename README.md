@@ -112,6 +112,10 @@ zone. It will, however, output [ISO
 8601](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
 in the "UTC" timezone indicated by the "Z" suffix.
 
+### Other Options
+
+- `--silence, -s` supresses the standard outputs.
+
 ## Changelog
 
 ### 0.0.1

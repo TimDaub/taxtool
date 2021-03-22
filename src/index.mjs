@@ -16,6 +16,7 @@ Usage:
 Options:
   --parse, -p
   --formatdatetime, -f
+  --silence, -s
 `,
   {
     flags: {
@@ -29,6 +30,12 @@ Options:
         alias: "f",
         default: "parseISO",
         isRequired: false
+      },
+      silence: {
+        type: "boolean",
+        alias: "s",
+        default: false,
+        isRequired: false
       }
     }
   }
@@ -39,7 +46,10 @@ export async function route(input, flags) {
   if (flags.parse) {
     l = await parseInput(input[0], flags.formatdatetime);
   }
-  output(l);
+
+  if (!flags.silence) {
+    output(l);
+  }
 }
 
 function output(l) {
