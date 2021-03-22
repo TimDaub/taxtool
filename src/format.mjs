@@ -92,3 +92,9 @@ export function testDateTime(fDateTime) {
     }
   };
 }
+
+export function testType(type) {
+  return type.toLowerCase() === "buy" || type.toLowerCase() === "sell"
+    ? type.toLowerCase()
+    : null;
+}

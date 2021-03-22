@@ -7,6 +7,7 @@ import {
   toLine,
   testNum,
   testDateTime,
+  testType,
   currencies
 } from "../src/format.mjs";
 import { toList } from "../src/file.mjs";
@@ -110,5 +111,14 @@ test("if dates can be parsed with ISO or custom", t => {
     "2017-05-28T11:18:12.000Z"
   );
 
-  t.throws(() => testDateTime("mm", "2021-03-17T16:53:12.587Z")("28/05/2017 13:18:12"));
+  t.throws(() =>
+    testDateTime("mm", "2021-03-17T16:53:12.587Z")("28/05/2017 13:18:12")
+  );
+});
+
+test("if lower and upper case types are matched equally", t => {
+  t.is(testType("Sell"), "sell");
+  t.is(testType("SelL"), "sell");
+  t.is(testType("Buy"), "buy");
+  t.is(testType("buy"), "buy");
 });

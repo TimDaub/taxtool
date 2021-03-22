@@ -5,7 +5,14 @@ const require = createRequire(import.meta.url);
 const pkg = require("../package.json");
 const meow = require("meow");
 
-import { parse, header, toLine, testNum, testDateTime } from "./format.mjs";
+import {
+  parse,
+  header,
+  toLine,
+  testNum,
+  testDateTime,
+  testType
+} from "./format.mjs";
 import { toList } from "./file.mjs";
 
 export const cli = meow(
@@ -66,7 +73,7 @@ export async function parseInput(input, fDateTime) {
 
   l = l.map(elem =>
     parse(elem, {
-      type: t => (t === "buy" || t === "sell" ? t : null),
+      type: testType,
       location: testString,
       asset: testString,
       amount: testNum,
