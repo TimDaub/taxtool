@@ -14,7 +14,7 @@ import {
   testType
 } from "./format.mjs";
 import { toList } from "./file.mjs";
-import { checkDuplicates } from "./validity.mjs";
+import { checkDuplicates, calcBalance } from "./validity.mjs";
 
 export const cli = meow(
   `
@@ -26,6 +26,8 @@ Options:
   --formatdatetime, -f
   --silence, -s
   --checkduplicates, -d
+  --calcbalance, -b
+  --delimiter, -l
 `,
   {
     flags: {
@@ -51,6 +53,18 @@ Options:
         alias: "d",
         default: false,
         isRequired: false
+      },
+      calcbalance: {
+        type: "string",
+        alias: "b",
+        default: "",
+        isRequired: false
+      },
+      delimiter: {
+        type: "string",
+        alias: "l",
+        default: ",",
+        isRequired: true
       }
     }
   }
@@ -64,17 +78,26 @@ export async function route(input, flags) {
     l = parseInput(l, flags.formatdatetime);
   }
   if (flags.checkduplicates) {
-    checkDuplicates(l, fPath);
+    checkDuplicates(l, fPath, header, flags.delimiter);
+  }
+  if (
+    flags.calcbalance &&
+    typeof flags.calcbalance === "string" &&
+    flags.calcbalance.length > 0
+  ) {
+    const assetName = flags.calcbalance;
+    calcBalance(assetName, l);
+    header.push(`${assetName}_BOUGHT`);
+    header.push(`${assetName}_SOLD`);
   }
   if (!flags.silence) {
-    output(l);
+    output(l, header, flags.delimiter);
   }
 }
 
-function output(l) {
-  console.info(header.join(","));
-  l.shift();
-  l.forEach(elem => console.info(toLine(elem)));
+function output(l, header, delimiter) {
+  console.info(header.join(delimiter));
+  l.forEach(elem => console.info(toLine(elem, header, delimiter)));
 }
 
 export function parseInput(l, fDateTime) {

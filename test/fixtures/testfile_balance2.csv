@@ -1,0 +1,2 @@
+type,location,asset,amount,exchanged_amount,exchanged_asset,datetime
+buy,coinbase,ETH,0.840195430000000000,130.00,EUR,2015-05-26T10:21:15.000Z

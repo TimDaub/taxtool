@@ -31,10 +31,10 @@ export const header = [
   "datetime"
 ];
 
-export function toLine(obj) {
+export function toLine(obj, header, delimiter) {
   let line = "";
   for (let prop of header) {
-    line += obj[prop] + ",";
+    line += obj[prop] + delimiter;
   }
 
   // NOTE: We remove the last letter as we've deliberately added an extra `,`

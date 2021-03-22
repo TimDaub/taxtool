@@ -126,9 +126,55 @@ However, you want to make sure to remove all duplicates. By using `-d`, all
 trades of a file will be comparred with each other and in case of a duplicate
 an error will be thrown.
 
+### Using `--calcbalance, -b`
+
+To check a document's plausibility or to see a year's revenue, `--calcbalance`
+can be used. As an string input it takes an asset name e.g. "ETH" and will then
+extend the output by adding two new colums `{assetName}_BOUGHT` and
+`{assetName}_SOLD`. 
+
+trades.csv
+```csv
+type,location,asset,amount,exchanged_amount,exchanged_asset,datetime
+buy,coinbase,ETH,1,1,EUR,2021-03-17T11:32:48.468Z
+sell,coinbase,ETH,1,1,EUR,2021-03-17T12:32:48.468Z
+sell,coinbase,EUR,1,1,ETH,2021-03-17T13:32:48.468Z
+buy,coinbase,EUR,1,1,ETH,2021-03-17T14:32:48.468Z
+```
+
+```bash
+$ taxtool ./test/fixtures/testfile_balance.csv -p --calcbalance "ETH"
+type,location,asset,amount,exchanged_amount,exchanged_asset,datetime,ETH_BOUGHT,ETH_SOLD
+> buy,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T11:32:48.468Z,1.000000000000000000,0.000000000000000000
+> sell,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T12:32:48.468Z,1.000000000000000000,1.000000000000000000
+> sell,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T13:32:48.468Z,1.000000000000000000,2.000000000000000000
+> buy,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T14:32:48.468Z,2.000000000000000000,2.000000000000000000
+```
+
+This allows us to conclude that on `2021-03-17T14:32:48.468Z` (the last trade),
+the user bought 2 ETH and also sold 2 ETH.
+
+
 ### Other Options
 
 - `--silence, -s` supresses the standard outputs.
+- `--delimiter, -l` can be used to define a preferred delimiter in the output
+  file, e.g. `taxtools -l ";" ...`
+
+## Usage with Microsoft Excel
+
+The output of taxtool is supposed to be compatible with tools like Microsoft
+Excel. However, note that these tools carry assumptions about a user's cultural
+environment. For example, in Germany the usage of `.` and `,` are swapped when
+comparred to e.g. English accounting. taxtools will always output numbers with
+high precision through the use of
+[moneysafe](https://www.npmjs.com/package/moneysafe).
+
+To use an up-to-date version of Excel, however, it may be required to label
+some columns in the text-import wizard as "Text" and not "General".
+Additionally, the `--delimiter, -l` function can help.
+
+![](./assets/excel-columns.png)
 
 ## Changelog
 

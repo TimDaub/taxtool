@@ -1,8 +1,9 @@
 // @format
 import test from "ava";
 
-import { checkDuplicates } from "../src/validity.mjs";
+import { checkDuplicates, calcBalance } from "../src/validity.mjs";
 import { toList } from "../src/file.mjs";
+import { header } from "../src/format.mjs";
 
 test("if error is thrown when no path argument is passed", async t => {
   t.throws(() => checkDuplicates([]), { instanceOf: Error });
@@ -12,15 +13,15 @@ test("if duplicates can be found", async t => {
   const path = "./test/fixtures/testfile_duplicates.csv";
   let l = await toList(path);
   try {
-    checkDuplicates(l, path);
+    checkDuplicates(l, path, header, ",");
   } catch (err) {
     t.is(
       err.toString(),
       `Error: Found duplicate in file "./test/fixtures/testfile_duplicates.csv" at L4.
 
-L2: buy,coinbase,unkown,1.5,1.5,shitcoin,2021-03-17T11:32:48.468Z
+L2: buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
 
-L4: buy,coinbase,unkown,1.5,1.5,shitcoin,2021-03-17T11:32:48.468Z
+L4: buy,coinbase,ETH,1.5,1.5,EUR,2021-03-17T11:32:48.468Z
 
 `
     );
@@ -31,6 +32,26 @@ L4: buy,coinbase,unkown,1.5,1.5,shitcoin,2021-03-17T11:32:48.468Z
 test("if checking for duplicates is silent when none a present", async t => {
   const path = "./test/fixtures/testfile_unique.csv";
   let l = await toList(path);
-  checkDuplicates(l, path);
+  checkDuplicates(l, path, header, ",");
   t.pass();
+});
+
+test("if calculating the balance of an asset works", async t => {
+  const path = "./test/fixtures/testfile_balance.csv";
+  let l = await toList(path);
+  l = calcBalance("ETH", l);
+
+  const lastElem = l[l.length - 1];
+  t.is(lastElem.ETH_BOUGHT, "2.000000000000000000");
+  t.is(lastElem.ETH_SOLD, "2.000000000000000000");
+});
+
+test("if calculating balances is valid", async t => {
+  const path = "./test/fixtures/testfile_balance2.csv";
+  let l = await toList(path);
+  l = calcBalance("ETH", l);
+
+  const elem = l[0];
+  t.is(elem.ETH_BOUGHT, "0.840195430000000000");
+  t.is(elem.ETH_SOLD, "0.000000000000000000");
 });

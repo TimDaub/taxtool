@@ -1,7 +1,41 @@
 // @format
-import { toLine } from "./format.mjs";
+import { toLine, currencies } from "./format.mjs";
 
-export function checkDuplicates(list, path) {
+export function calcBalance(assetName, list) {
+  const asset = currencies[assetName];
+
+  const state = {
+    bought: asset(0),
+    sold: asset(0)
+  };
+  for (let t of list) {
+    if (t.type === "buy") {
+      if (t.asset === assetName) {
+        state.bought = state.bought.plus(asset(t.amount));
+      }
+
+      if (t.exchanged_asset === assetName) {
+        state.bought = state.bought.plus(asset(t.exchanged_amount));
+      }
+    }
+    if (t.type === "sell") {
+      if (t.asset === assetName) {
+        state.sold = state.sold.plus(asset(t.amount));
+      }
+
+      if (t.exchanged_asset === assetName) {
+        state.sold = state.sold.plus(asset(t.exchanged_amount));
+      }
+    }
+
+    t[`${assetName}_BOUGHT`] = state.bought.toString();
+    t[`${assetName}_SOLD`] = state.sold.toString();
+  }
+
+  return list;
+}
+
+export function checkDuplicates(list, path, header, delimiter) {
   if (!path) {
     throw new Error(`"path" argument is required`);
   }
@@ -19,9 +53,9 @@ export function checkDuplicates(list, path) {
         const message = `Found duplicate in file "${path}" at L${j +
           lineOffset}.
 
-L${lineOffset + i}: ${toLine(a)}
+L${lineOffset + i}: ${toLine(a, header, delimiter)}
 
-L${lineOffset + j}: ${toLine(b)}
+L${lineOffset + j}: ${toLine(b, header, delimiter)}
 
 `;
         throw new Error(message);

@@ -4,6 +4,7 @@ import { parseISO, isValid } from "date-fns";
 
 import {
   parse,
+  header,
   toLine,
   testNum,
   testDateTime,
@@ -83,7 +84,7 @@ test("if turning object into a csv line works", async t => {
     datetime: "2021-03-17T11:32:48.468Z"
   };
 
-  const line = toLine(obj);
+  const line = toLine(obj, header, ",");
   t.is(
     line,
     `${obj.type},${obj.location},${obj.asset},${obj.amount},${
