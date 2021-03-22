@@ -14,6 +14,7 @@ import {
   testType
 } from "./format.mjs";
 import { toList } from "./file.mjs";
+import { checkDuplicates } from "./validity.mjs";
 
 export const cli = meow(
   `
@@ -24,6 +25,7 @@ Options:
   --parse, -p
   --formatdatetime, -f
   --silence, -s
+  --checkduplicates, -d
 `,
   {
     flags: {
@@ -43,17 +45,27 @@ Options:
         alias: "s",
         default: false,
         isRequired: false
+      },
+      checkduplicates: {
+        type: "boolean",
+        alias: "d",
+        default: false,
+        isRequired: false
       }
     }
   }
 );
 
 export async function route(input, flags) {
-  let l;
-  if (flags.parse) {
-    l = await parseInput(input[0], flags.formatdatetime);
-  }
+  const fPath = input[0];
+  let l = await toList(fPath);
 
+  if (flags.parse) {
+    l = parseInput(l, flags.formatdatetime);
+  }
+  if (flags.checkduplicates) {
+    checkDuplicates(l, fPath);
+  }
   if (!flags.silence) {
     output(l);
   }
@@ -65,9 +77,7 @@ function output(l) {
   l.forEach(elem => console.info(toLine(elem)));
 }
 
-export async function parseInput(input, fDateTime) {
-  let l = await toList(input);
-
+export function parseInput(l, fDateTime) {
   const testString = elem =>
     typeof elem === "string" && elem.length > 0 ? elem : null;
 

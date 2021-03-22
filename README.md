@@ -112,6 +112,13 @@ zone. It will, however, output [ISO
 8601](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
 in the "UTC" timezone indicated by the "Z" suffix.
 
+### Using `--checkduplicates, -d`
+
+There could be cases where your file includes two times the exact same trade.
+However, you want to make sure to remove all duplicates. By using `-d`, all
+trades of a file will be comparred with each other and in case of a duplicate
+an error will be thrown.
+
 ### Other Options
 
 - `--silence, -s` supresses the standard outputs.
