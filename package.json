@@ -10,7 +10,7 @@
   },
   "name": "taxtool",
   "description": "ctt is a tool that can help you file your crypto currency taxes.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "./src/index.mjs",
   "directories": {
     "test": "test"

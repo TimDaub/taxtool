@@ -178,6 +178,13 @@ Additionally, the `--delimiter, -l` function can help.
 
 ## Changelog
 
+### 0.1.0
+
+- Add `--silence, -s` option
+- Add `--checkduplicate, -d` option
+- Add `--delimiter, -l` option
+- Add `--calcbalance, -b` option
+
 ### 0.0.1
 
 - Initial release
