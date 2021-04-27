@@ -97,9 +97,11 @@ $ cat parsed.csv
 
 ### Using `--formatdatetime, -f`
 
-Assuming you have a date of the format `28/05/2017 13:18:12`, then you can use
-the format string `dd/MM/yyyy HH:mm:ss` according to [date-fns's
-`parse`](https://date-fns.org/v2.8.1/docs/parse).
+Assuming you have a date of the format `28/05/2017 13:18:12 Z`, then you can
+use the format string `dd/MM/yyyy HH:mm:ss X` according to [date-fns's
+`parse`](https://date-fns.org/v2.8.1/docs/parse). Please don't forget including
+timezone information in your date strings as otherwise the data may be
+incorrectly shifted in relation to UTC.
 
 trades.csv
 ```csv

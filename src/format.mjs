@@ -74,20 +74,20 @@ export function testNum(elem, unit) {
   }
 }
 
-export function testDateTime(fDateTime) {
+export function testDateTime(formatString) {
   return elem => {
     let parsed;
-    if (fDateTime === "parseISO") {
+    if (formatString === "parseISO") {
       parsed = parseISO(elem);
     } else {
-      parsed = parseDate(elem, fDateTime, new Date());
+      parsed = parseDate(elem, formatString, new Date());
     }
 
     if (isValid(parsed)) {
       return parsed.toISOString();
     } else {
       throw new Error(
-        `Couldn't parse date string "${elem}" with format string "${fDateTime}"`
+        `Couldn't parse date string "${elem}" with format string "${formatString}"`
       );
     }
   };

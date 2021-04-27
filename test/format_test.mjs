@@ -108,8 +108,8 @@ test("if dates can be parsed with ISO or custom", t => {
     "2021-03-17T16:53:12.587Z"
   );
   t.is(
-    testDateTime("dd/MM/yyyy HH:mm:ss")("28/05/2017 13:18:12"),
-    "2017-05-28T11:18:12.000Z"
+    testDateTime("dd/MM/yyyy HH:mm:ss X")("28/05/2017 13:18:12 Z"),
+    "2017-05-28T13:18:12.000Z"
   );
 
   t.throws(() =>
