@@ -55,3 +55,79 @@ test("if calculating balances is valid", async t => {
   t.is(elem.ETH_BOUGHT, "0.840195430000000000");
   t.is(elem.ETH_SOLD, "0.000000000000000000");
 });
+
+test("if buy is calculated correctly for asset balance", async t => {
+  let l = [
+    {
+      type: "buy",
+      location: "coinbase",
+      asset: "ETH",
+      amount: "1.0",
+      exchanged_amount: "100.0",
+      exchanged_asset: "EUR",
+      datetime: "2015-05-26T10:21:15.000Z"
+    }
+  ];
+  l = calcBalance("ETH", l);
+
+  const elem = l[0];
+  t.is(elem.ETH_BOUGHT, "1.000000000000000000");
+  t.is(elem.ETH_SOLD, "0.000000000000000000");
+});
+
+test("if sell is calculated correctly for asset balance", async t => {
+  let l = [
+    {
+      type: "sell",
+      location: "coinbase",
+      asset: "ETH",
+      amount: "1.0",
+      exchanged_amount: "100.0",
+      exchanged_asset: "EUR",
+      datetime: "2015-05-26T10:21:15.000Z"
+    }
+  ];
+  l = calcBalance("ETH", l);
+
+  const elem = l[0];
+  t.is(elem.ETH_BOUGHT, "0.000000000000000000");
+  t.is(elem.ETH_SOLD, "1.000000000000000000");
+});
+
+test("if reverse buy is calculated correctly for counter asset balance", async t => {
+  let l = [
+    {
+      type: "buy",
+      location: "coinbase",
+      asset: "BTC",
+      amount: "0.1",
+      exchanged_amount: "1.0",
+      exchanged_asset: "ETH",
+      datetime: "2015-05-26T10:21:15.000Z"
+    }
+  ];
+  l = calcBalance("ETH", l);
+
+  const elem = l[0];
+  t.is(elem.ETH_BOUGHT, "0.000000000000000000");
+  t.is(elem.ETH_SOLD, "1.000000000000000000");
+});
+
+test("if reverse sell is calculated correctly for counter asset balance", async t => {
+  let l = [
+    {
+      type: "sell",
+      location: "coinbase",
+      asset: "BTC",
+      amount: "0.1",
+      exchanged_amount: "1.0",
+      exchanged_asset: "ETH",
+      datetime: "2015-05-26T10:21:15.000Z"
+    }
+  ];
+  l = calcBalance("ETH", l);
+
+  const elem = l[0];
+  t.is(elem.ETH_BOUGHT, "1.000000000000000000");
+  t.is(elem.ETH_SOLD, "0.000000000000000000");
+});

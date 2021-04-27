@@ -15,7 +15,7 @@ export function calcBalance(assetName, list) {
       }
 
       if (t.exchanged_asset === assetName) {
-        state.bought = state.bought.plus(asset(t.exchanged_amount));
+        state.sold = state.sold.plus(asset(t.exchanged_amount));
       }
     }
     if (t.type === "sell") {
@@ -24,7 +24,7 @@ export function calcBalance(assetName, list) {
       }
 
       if (t.exchanged_asset === assetName) {
-        state.sold = state.sold.plus(asset(t.exchanged_amount));
+        state.bought = state.bought.plus(asset(t.exchanged_amount));
       }
     }
 
