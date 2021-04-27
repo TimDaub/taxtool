@@ -138,7 +138,8 @@ To check a document's plausibility or to see a year's revenue, `--calcbalance`
 can be used. As an string input it takes an asset name e.g. "ETH" and will then
 extend the output by adding two new colums `{assetName}_BOUGHT` and
 `{assetName}_SOLD`. Upfront, all trades are sorted by their date time in an
-ascending order.
+ascending order. `--calcbalance` can process multiple assets at once by separating
+them with a comma: `--calcbalance "ETH,EUR"`
 
 trades.csv
 ```csv
@@ -150,12 +151,12 @@ buy,coinbase,EUR,1,1,ETH,2021-03-17T14:32:48.468Z
 ```
 
 ```bash
-$ taxtool ./test/fixtures/testfile_balance.csv -p --calcbalance "ETH"
-type,location,asset,amount,exchanged_amount,exchanged_asset,datetime,ETH_BOUGHT,ETH_SOLD
-buy,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T11:32:48.468Z,1.000000000000000000,0.000000000000000000
-sell,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T12:32:48.468Z,1.000000000000000000,1.000000000000000000
-sell,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T13:32:48.468Z,2.000000000000000000,1.000000000000000000
-buy,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T14:32:48.468Z,2.000000000000000000,2.000000000000000000
+$ taxtool ./test/fixtures/testfile_balance.csv -p --calcbalance "ETH,EUR"
+type,location,asset,amount,exchanged_amount,exchanged_asset,datetime,ETH_BOUGHT,ETH_SOLD,EUR_BOUGHT,EUR_SOLD
+buy,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T11:32:48.468Z,1.000000000000000000,0.000000000000000000,0.00,1.00
+sell,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T12:32:48.468Z,1.000000000000000000,1.000000000000000000,1.00,1.00
+sell,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T13:32:48.468Z,2.000000000000000000,1.000000000000000000,1.00,2.00
+buy,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T14:32:48.468Z,2.000000000000000000,2.000000000000000000,2.00,2.00
 ```
 
 This allows us to conclude that on `2021-03-17T14:32:48.468Z` (the last trade),

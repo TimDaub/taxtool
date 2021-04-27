@@ -2,6 +2,11 @@
 import { $, createCurrency, ethereum as ETH } from "moneysafe";
 import { parse as parseDate, parseISO, isValid } from "date-fns";
 
+export function parseCalcBalance(s) {
+  s = s.replace(/\s+/g, "");
+  return s.split(",").filter(Boolean);
+}
+
 export function parse(obj, options) {
   const clone = { ...obj };
   const keys = Object.keys(options);

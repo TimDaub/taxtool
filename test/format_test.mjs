@@ -9,9 +9,18 @@ import {
   testNum,
   testDateTime,
   testType,
-  currencies
+  currencies,
+  parseCalcBalance
 } from "../src/format.mjs";
 import { toList } from "../src/file.mjs";
+
+test("if parse calc balance can handle different formats", t => {
+  t.deepEqual(["ETH", "BTC"], parseCalcBalance("ETH,   BTC"));
+  t.deepEqual(["ETH", "BTC"], parseCalcBalance("ETH,BTC"));
+  t.deepEqual(["ETH", "BTC"], parseCalcBalance(" ETH , BTC"));
+  t.deepEqual(["ETH"], parseCalcBalance("ETH"));
+  t.deepEqual(["ETH"], parseCalcBalance("ETH,"));
+});
 
 test("if parsing objects according to options works", async t => {
   let l = await toList("./test/fixtures/testfile.csv");

@@ -11,7 +11,8 @@ import {
   toLine,
   testNum,
   testDateTime,
-  testType
+  testType,
+  parseCalcBalance
 } from "./format.mjs";
 import { toList } from "./file.mjs";
 import { checkDuplicates, calcBalance, orderAsc } from "./validity.mjs";
@@ -100,10 +101,12 @@ export async function route(input, flags) {
       l = orderAsc(l);
     }
 
-    const assetName = flags.calcbalance;
-    calcBalance(assetName, l);
-    header.push(`${assetName}_BOUGHT`);
-    header.push(`${assetName}_SOLD`);
+    const assetNames = parseCalcBalance(flags.calcbalance);
+    for (let name of assetNames) {
+      calcBalance(name, l);
+      header.push(`${name}_BOUGHT`);
+      header.push(`${name}_SOLD`);
+    }
   }
   if (!flags.silence) {
     output(l, header, flags.delimiter);
