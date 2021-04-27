@@ -65,3 +65,8 @@ L${lineOffset + j}: ${toLine(b, header, delimiter)}
     }
   }
 }
+
+export function orderAsc(list) {
+  const lCopy = [...list];
+  return lCopy.sort((a, b) => (a.datetime > b.datetime ? 1 : -1));
+}

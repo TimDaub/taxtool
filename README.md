@@ -128,12 +128,17 @@ However, you want to make sure to remove all duplicates. By using `-d`, all
 trades of a file will be comparred with each other and in case of a duplicate
 an error will be thrown.
 
+### Using `--order, -o`
+
+Trades can be sorted ascendingly by date using the `--order` parameter.
+
 ### Using `--calcbalance, -b`
 
 To check a document's plausibility or to see a year's revenue, `--calcbalance`
 can be used. As an string input it takes an asset name e.g. "ETH" and will then
 extend the output by adding two new colums `{assetName}_BOUGHT` and
-`{assetName}_SOLD`. 
+`{assetName}_SOLD`. Upfront, all trades are sorted by their date time in an
+ascending order.
 
 trades.csv
 ```csv

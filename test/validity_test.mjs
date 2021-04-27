@@ -1,7 +1,7 @@
 // @format
 import test from "ava";
 
-import { checkDuplicates, calcBalance } from "../src/validity.mjs";
+import { checkDuplicates, calcBalance, orderAsc } from "../src/validity.mjs";
 import { toList } from "../src/file.mjs";
 import { header } from "../src/format.mjs";
 
@@ -56,7 +56,7 @@ test("if calculating balances is valid", async t => {
   t.is(elem.ETH_SOLD, "0.000000000000000000");
 });
 
-test("if buy is calculated correctly for asset balance", async t => {
+test("if buy is calculated correctly for asset balance", t => {
   let l = [
     {
       type: "buy",
@@ -75,7 +75,7 @@ test("if buy is calculated correctly for asset balance", async t => {
   t.is(elem.ETH_SOLD, "0.000000000000000000");
 });
 
-test("if sell is calculated correctly for asset balance", async t => {
+test("if sell is calculated correctly for asset balance", t => {
   let l = [
     {
       type: "sell",
@@ -94,7 +94,7 @@ test("if sell is calculated correctly for asset balance", async t => {
   t.is(elem.ETH_SOLD, "1.000000000000000000");
 });
 
-test("if reverse buy is calculated correctly for counter asset balance", async t => {
+test("if reverse buy is calculated correctly for counter asset balance", t => {
   let l = [
     {
       type: "buy",
@@ -113,7 +113,7 @@ test("if reverse buy is calculated correctly for counter asset balance", async t
   t.is(elem.ETH_SOLD, "1.000000000000000000");
 });
 
-test("if reverse sell is calculated correctly for counter asset balance", async t => {
+test("if reverse sell is calculated correctly for counter asset balance", t => {
   let l = [
     {
       type: "sell",
@@ -130,4 +130,34 @@ test("if reverse sell is calculated correctly for counter asset balance", async 
   const elem = l[0];
   t.is(elem.ETH_BOUGHT, "1.000000000000000000");
   t.is(elem.ETH_SOLD, "0.000000000000000000");
+});
+
+test("if ordering by datetime works", t => {
+  const l = [
+    {
+      datetime: "2016-01-01T00:00:00.000Z"
+    },
+    {
+      datetime: "2015-01-01T00:00:00.000Z"
+    },
+    {
+      datetime: "2014-12-12T00:00:00.000Z"
+    }
+  ];
+
+  const actual = orderAsc(l);
+  const expected = [
+    {
+      datetime: "2014-12-12T00:00:00.000Z"
+    },
+    {
+      datetime: "2015-01-01T00:00:00.000Z"
+    },
+    {
+      datetime: "2016-01-01T00:00:00.000Z"
+    }
+  ];
+
+  t.notDeepEqual(l, expected);
+  t.deepEqual(actual, expected);
 });

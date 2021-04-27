@@ -14,7 +14,7 @@ import {
   testType
 } from "./format.mjs";
 import { toList } from "./file.mjs";
-import { checkDuplicates, calcBalance } from "./validity.mjs";
+import { checkDuplicates, calcBalance, orderAsc } from "./validity.mjs";
 
 export const cli = meow(
   `
@@ -24,6 +24,7 @@ Usage:
 Options:
   --parse, -p
   --formatdatetime, -f
+  --order, -o
   --silence, -s
   --checkduplicates, -d
   --calcbalance, -b
@@ -65,6 +66,12 @@ Options:
         alias: "l",
         default: ",",
         isRequired: true
+      },
+      order: {
+        type: "boolean",
+        alias: "o",
+        default: true,
+        isRequired: false
       }
     }
   }
@@ -80,11 +87,19 @@ export async function route(input, flags) {
   if (flags.checkduplicates) {
     checkDuplicates(l, fPath, header, flags.delimiter);
   }
+  if (flags.order) {
+    l = orderAsc(l);
+  }
+
   if (
     flags.calcbalance &&
     typeof flags.calcbalance === "string" &&
     flags.calcbalance.length > 0
   ) {
+    if (!flags.order) {
+      l = orderAsc(l);
+    }
+
     const assetName = flags.calcbalance;
     calcBalance(assetName, l);
     header.push(`${assetName}_BOUGHT`);
