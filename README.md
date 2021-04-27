@@ -186,6 +186,15 @@ Additionally, the `--delimiter, -l` function can help.
 
 ## Changelog
 
+### 0.2.0
+
+- `--calcbalance` can now ingest multiple assets separated by a comma `,`
+- A new parameter boolean `--order` is introduced that sorts all trades in
+  ascending order. `--calcbalance` now automatically orders before too.
+- Balances with `--calcbalance` have been incorrect with reverse buys and sells
+  being accounted to the type of action. It is now correct and explicitly
+  tested.
+
 ### 0.1.0
 
 - Add `--silence, -s` option
