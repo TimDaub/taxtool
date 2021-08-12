@@ -108,6 +108,7 @@ export async function route(input, flags) {
       header.push(`${name}_SOLD`);
       header.push(`${name}_RECEIVED`);
       header.push(`${name}_SENT`);
+      header.push(`${name}_BALANCE`);
     }
   }
   if (!flags.silence) {

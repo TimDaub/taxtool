@@ -13,6 +13,10 @@ export function parse(obj, options) {
 
   for (let key of keys) {
     let val;
+    if (clone["type"] === "receive" || clone["type"] === "send") {
+      options["exchanged_asset"] = () => "";
+      options["exchanged_amount"] = () => "";
+    }
     if (key === "amount") {
       val = options[key](clone[key], clone.asset);
     } else if (key === "exchanged_amount") {

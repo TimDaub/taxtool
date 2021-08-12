@@ -139,10 +139,19 @@ Trades can be sorted ascendingly by date using the `--order` parameter.
 
 To check a document's plausibility or to see a year's revenue, `--calcbalance`
 can be used. As an string input it takes an asset name e.g. "ETH" and will then
-extend the output by adding two new colums `{assetName}_BOUGHT` and
-`{assetName}_SOLD`. Upfront, all trades are sorted by their date time in an
-ascending order. `--calcbalance` can process multiple assets at once by separating
-them with a comma: `--calcbalance "ETH,EUR"`
+extend the output by adding five new colums:
+
+1. `{assetName}_BOUGHT`: The number of assets bought until that date.
+1. `{assetName}_SOLD`: The number of assets sold until that date.
+1. `{assetName}_RECEIVED`: The number of assets received until that date (e.g.
+   through a donation).
+1. `{assetName}_SENT`: The number of assets sent until that date (e.g.  to rent
+   a server).
+1. `{assetName}_BALANCE`: The balance of that asset after the transaction.
+
+Upfront, all trades are sorted by their date time in an ascending order.
+`--calcbalance` can process multiple assets at once by separating them with a
+comma: `--calcbalance "ETH,EUR"`
 
 trades.csv
 ```csv
@@ -151,19 +160,29 @@ buy,coinbase,ETH,1,1,EUR,2021-03-17T11:32:48.468Z
 sell,coinbase,ETH,1,1,EUR,2021-03-17T12:32:48.468Z
 sell,coinbase,EUR,1,1,ETH,2021-03-17T13:32:48.468Z
 buy,coinbase,EUR,1,1,ETH,2021-03-17T14:32:48.468Z
+receive,friend,ETH,1,,,2015-05-26T10:21:15.000Z
+send,friend,ETH,1,,,2021-05-26T10:21:15.000Z
 ```
 
 ```bash
 $ taxtool ./test/fixtures/testfile_balance.csv -p --calcbalance "ETH,EUR"
-type,location,asset,amount,exchanged_amount,exchanged_asset,datetime,ETH_BOUGHT,ETH_SOLD,EUR_BOUGHT,EUR_SOLD
-buy,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T11:32:48.468Z,1.000000000000000000,0.000000000000000000,0.00,1.00
-sell,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T12:32:48.468Z,1.000000000000000000,1.000000000000000000,1.00,1.00
-sell,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T13:32:48.468Z,2.000000000000000000,1.000000000000000000,1.00,2.00
-buy,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T14:32:48.468Z,2.000000000000000000,2.000000000000000000,2.00,2.00
+type,location,asset,amount,exchanged_amount,exchanged_asset,datetime,ETH_BOUGHT,ETH_SOLD,ETH_RECEIVED,ETH_SENT,ETH_BALANCE,EUR_BOUGHT,EUR_SOLD,EUR_RECEIVED,EUR_SENT,EUR_BALANCE
+receive,friend,ETH,1.000000000000000000,,,2015-05-26T10:21:15.000Z,0.000000000000000000,0.000000000000000000,1.000000000000000000,0.000000000000000000,1.000000000000000000,0.00,0.00,0.00,0.00,0.00
+buy,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T11:32:48.468Z,1.000000000000000000,0.000000000000000000,1.000000000000000000,0.000000000000000000,2.000000000000000000,0.00,1.00,0.00,0.00,-1.00
+sell,coinbase,ETH,1.000000000000000000,1.00,EUR,2021-03-17T12:32:48.468Z,1.000000000000000000,1.000000000000000000,1.000000000000000000,0.000000000000000000,1.000000000000000000,1.00,1.00,0.00,0.00,0.00
+sell,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T13:32:48.468Z,2.000000000000000000,1.000000000000000000,1.000000000000000000,0.000000000000000000,2.000000000000000000,1.00,2.00,0.00,0.00,-1.00
+buy,coinbase,EUR,1.00,1.000000000000000000,ETH,2021-03-17T14:32:48.468Z,2.000000000000000000,2.000000000000000000,1.000000000000000000,0.000000000000000000,1.000000000000000000,2.00,2.00,0.00,0.00,0.00
+send,friend,ETH,1.000000000000000000,,,2021-05-26T10:21:15.000Z,2.000000000000000000,2.000000000000000000,1.000000000000000000,1.000000000000000000,0.000000000000000000,2.00,2.00,0.00,0.00,0.00
 ```
 
-This allows us to conclude that on `2021-03-17T14:32:48.468Z` (the last trade),
-the user bought 2 ETH and also sold 2 ETH in total.
+This allows us to conclude that on `2021-05-26T10:21:15.000Z` (last action) the
+user:
+- bought 2 ETH;
+- sold 2 ETH;
+- received 1 ETH
+- sent 1 ETH
+
+And that their balance is 0 ETH and 0 EUR.
 
 
 ### Other Options

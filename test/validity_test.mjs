@@ -66,6 +66,7 @@ test("if calculating send and receive operations are valid", async t => {
   t.is(elem.ETH_SOLD, "0.000000000000000000");
   t.is(elem.ETH_RECEIVED, "1.000000000000000000");
   t.is(elem.ETH_SENT, "0.500000000000000000");
+  t.is(elem.ETH_BALANCE, "1.340195430000000000");
 });
 
 test("if buy is calculated correctly for asset balance", t => {

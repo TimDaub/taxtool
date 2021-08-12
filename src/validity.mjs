@@ -44,6 +44,9 @@ export function calcBalance(assetName, list) {
     t[`${assetName}_SOLD`] = state.sold.toString();
     t[`${assetName}_RECEIVED`] = state.received.toString();
     t[`${assetName}_SENT`] = state.sent.toString();
+    const inc = state.bought.plus(state.received)
+    const out = state.sold.plus(state.sent)
+    t[`${assetName}_BALANCE`] = inc.minus(out).toString();
   }
 
   return list;
