@@ -208,6 +208,13 @@ Additionally, the `--delimiter, -l` function can help.
 
 ## Changelog
 
+### 0.3.0
+
+- (Breaking change) `--calcbalance` now adds `${NAME}_RECEIVED`, `${NAME}_SENT`
+and `${NAME}_BALANCE`.
+- (Breaking change) Two new values ("receive" and "send") in the data format
+were added for `type`.
+
 ### 0.2.0
 
 - `--calcbalance` can now ingest multiple assets separated by a comma `,`

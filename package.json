@@ -10,7 +10,7 @@
   },
   "name": "taxtool",
   "description": "taxtool can help you file your crypto currency taxes.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "./src/index.mjs",
   "directories": {
     "test": "test"
