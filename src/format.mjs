@@ -38,6 +38,7 @@ export const header = [
 
 export function toLine(obj, header, delimiter) {
   let line = "";
+
   for (let prop of header) {
     line += obj[prop] + delimiter;
   }
@@ -67,7 +68,27 @@ export const currencies = {
   NMR: ETH,
   ANT: ETH,
   ZRX: ETH,
+  ENG: ETH,
+  RDN: ETH,
+  SNT: ETH,
+  // NOTE: I looked around but there was no clear source for how many decimals
+  // ZCASH has.
+  ZEC: ETH,
+  XMR: ETH,
+  DAI: ETH,
+  USDC: ETH,
+  SAI: ETH,
+  MKR: ETH,
+  cSAI: ETH,
+  cDAI: ETH,
+  XBT7D_D95: BTC,
+  ETHM19: ETH,
   XBTUSD: $,
+  UNI: ETH,
+  LEAP: ETH,
+  cDAIUSDC: ETH,
+  "cDAI+cUSDC": ETH,
+  USD: $,
   EUR
 };
 
