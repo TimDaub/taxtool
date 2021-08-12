@@ -50,7 +50,7 @@ structure useful.
 
 ### Properties
 
-- `type` is either `{"sell", "buy"}`.
+- `type` is either `{"sell", "buy", "receive", "send"}`.
 - `location` is an arbitrary string referring to the exchange of the trade.
 - `asset` is the ticker value of the asset, e.g. Ethereum is "ETH".
 - `amount` is the amount of `asset`.
@@ -58,6 +58,9 @@ structure useful.
 - `exchanged_asset` is the counter asset ticket of `asset`, e.g. Euro is "EUR".
 - `datetime` is the ISO 8601 time the action executed. Note that ISO 8601 assumes
   UTC as its default time zone.
+
+For `type == "receive"` or `type == "send"`, `exchanged_amount` and
+`exchanged_asset` have to be empty.
 
 ### Notes
 

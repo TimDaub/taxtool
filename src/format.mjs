@@ -120,7 +120,10 @@ export function testDateTime(formatString) {
 }
 
 export function testType(type) {
-  return type.toLowerCase() === "buy" || type.toLowerCase() === "sell"
+  return type.toLowerCase() === "buy" ||
+    type.toLowerCase() === "sell" ||
+    type.toLowerCase() === "receive" ||
+    type.toLowerCase() === "send"
     ? type.toLowerCase()
     : null;
 }

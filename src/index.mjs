@@ -106,6 +106,8 @@ export async function route(input, flags) {
       calcBalance(name, l);
       header.push(`${name}_BOUGHT`);
       header.push(`${name}_SOLD`);
+      header.push(`${name}_RECEIVED`);
+      header.push(`${name}_SENT`);
     }
   }
   if (!flags.silence) {

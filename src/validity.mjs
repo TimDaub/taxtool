@@ -6,7 +6,9 @@ export function calcBalance(assetName, list) {
 
   const state = {
     bought: asset(0),
-    sold: asset(0)
+    sold: asset(0),
+    received: asset(0),
+    sent: asset(0)
   };
   for (let t of list) {
     if (t.type === "buy") {
@@ -27,9 +29,21 @@ export function calcBalance(assetName, list) {
         state.bought = state.bought.plus(asset(t.exchanged_amount));
       }
     }
+    if (t.type === "receive") {
+      if (t.asset === assetName) {
+        state.received = state.received.plus(asset(t.amount));
+      }
+    }
+    if (t.type === "send") {
+      if (t.asset === assetName) {
+        state.sent = state.sent.plus(asset(t.amount));
+      }
+    }
 
     t[`${assetName}_BOUGHT`] = state.bought.toString();
     t[`${assetName}_SOLD`] = state.sold.toString();
+    t[`${assetName}_RECEIVED`] = state.received.toString();
+    t[`${assetName}_SENT`] = state.sent.toString();
   }
 
   return list;
